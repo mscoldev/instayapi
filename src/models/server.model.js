@@ -1,6 +1,6 @@
-import express from "express";
-import cors from "cors";
-import morgan from "morgan";
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
 
 const corsOptions = {
     credentials: true,
@@ -9,11 +9,23 @@ const corsOptions = {
     origin: "*"
 }
 
-export default class Server {
+class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT
+        this.port = process.env.PORT;
+
+        this.boxPath = '/api/box';
+
+
+        //Middlewares
+        this.middlewares();
+
+
+        //Routes
+        this.routes();
+
+
     }
 
     listen() {
@@ -22,15 +34,30 @@ export default class Server {
         });
     }
 
+    middlewares() {
+
+        //CORS
+
+        this.app.use(cors(corsOptions));
+
+        // Morgan
+
+        this.app.use(morgan('dev'));
+
+        //JSON express
+
+        this.app.use(express.json());
+
+
+
+    }
+
+    routes() {
+
+        this.app.use(this.boxPath, require('../routes/sendbox.routes.js'));
+
+    }
+
 }
 
-
-
-
-const app = express();
-
-app.set('port', process.env.PORT || 4000)
-
-app.listen(app.get('port'));
-
-console.log("Servidor corriendo, en el puerto:", app.get("port"));
+module.exports = Server;
