@@ -1,9 +1,8 @@
-import express from "express";
+import * as dotenv from 'dotenv';
+import Server from './models/server.model.js';
 
-const app = express();
+dotenv.config()
 
-app.set('port', process.env.PORT || 3000)
+const server = new Server();
 
-app.listen(app.get('port'));
-
-console.log("Servidor corriendo, en el puerto:", app.get("port"));
+server.listen();

@@ -9,15 +9,18 @@ const corsOptions = {
     origin: "*"
 }
 
-class Server {
+export default class Server {
 
     constructor() {
         this.app = express();
         this.port = process.env.PORT
-
-
     }
 
+    listen() {
+        this.app.listen(this.port, () => {
+            console.log("Server running on port:", this.port);
+        });
+    }
 
 }
 
@@ -26,7 +29,7 @@ class Server {
 
 const app = express();
 
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 4000)
 
 app.listen(app.get('port'));
 
