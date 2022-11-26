@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const { dbConnection } = require('../database/config.database')
 
 const corsOptions = {
     credentials: true,
@@ -16,6 +17,11 @@ class Server {
         this.port = process.env.PORT;
 
         this.boxPath = '/api/box';
+        this.userPath = '/api/users';
+        this.orderPath = '/api/orders';
+        this.authPath = '/api/auth';
+
+        this.Initialize();
 
 
         //Middlewares
@@ -27,6 +33,13 @@ class Server {
 
 
     }
+
+    async Initialize() {
+        await Promise.all([
+            dbConnection(),
+        ])
+    }
+
 
     listen() {
         this.app.listen(this.port, () => {
@@ -55,6 +68,9 @@ class Server {
     routes() {
 
         this.app.use(this.boxPath, require('../routes/sendbox.routes.js'));
+        this.app.use(this.userPath, require('../routes/users.routes.js'));
+        this.app.use(this.orderPath, require('../routes/orders.routes.js'));
+        this.app.use(this.authPath, require('../routes/auth.routes.js'));
 
     }
 
