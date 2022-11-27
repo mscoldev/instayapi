@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { dbConnection } = require('../database/config.database')
 
+const PORT = process.env.PORT || 3000;
+
 
 const corsOptions = {
     credentials: true,
@@ -16,7 +18,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT;
+        this.port = PORT
 
         this.boxPath = '/api/box';
         this.userPath = '/api/users';
