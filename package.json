@@ -1,6 +1,9 @@
 {
   "name": "instayapi",
   "version": "1.0.0",
+    "engines": {
+    "node": "16.x"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -32,7 +35,6 @@
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.2",
     "@babel/node": "^7.20.2",
-    "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2"
   }
 }

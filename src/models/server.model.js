@@ -1,7 +1,9 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const { dbConnection } = require('../database/config.database')
+
 
 const corsOptions = {
     credentials: true,
@@ -31,7 +33,6 @@ class Server {
         //Routes
         this.routes();
 
-
     }
 
     async Initialize() {
@@ -41,13 +42,9 @@ class Server {
     }
 
 
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log("Server running on port:", this.port);
-        });
-    }
-
     middlewares() {
+
+
 
         //CORS
 
@@ -61,7 +58,10 @@ class Server {
 
         this.app.use(express.json());
 
-        this.app.use(express.static('public'));
+        //Carpeta Estatica
+
+        this.app.use('/', express.static(path.join(__dirname, '../public')));
+
 
 
 
@@ -69,13 +69,23 @@ class Server {
 
     routes() {
 
-        this.app.use(this.boxPath, require('../routes/sendbox.routes.js'));
-        this.app.use(this.userPath, require('../routes/users.routes.js'));
-        this.app.use(this.orderPath, require('../routes/orders.routes.js'));
-        this.app.use(this.authPath, require('../routes/auth.routes.js'));
+        this.app.use(this.boxPath, require('../routes/sendbox.routes'));
+        this.app.use(this.userPath, require('../routes/users.routes'));
+        this.app.use(this.orderPath, require('../routes/orders.routes'));
+        this.app.use(this.authPath, require('../routes/auth.routes'));
 
     }
 
+
+    listen() {
+        this.app.listen(this.port, () => {
+            console.log("Server running on port:", this.port);
+        });
+    }
+
+
 }
+
+
 
 module.exports = Server;
