@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const userSchema = Schema({
     nombre: {
@@ -10,7 +10,7 @@ const userSchema = Schema({
         type: String,
         unique: [true, 'El nombre de usuario ya se encuentra en uso']
     },
-    contrasena: {
+    password: {
         type: String,
         required: [true, 'La contrasena es requerida']
     },
