@@ -16,6 +16,20 @@ const getOrder = async (req = request, res = response) => {
 
 }
 
+const getOrderById = async (req = request, res = response) => {
+    const order = await Order.findById(req.params._id);
+    if (order != null) {
+        res.status(200).json({
+            msg: 'orden por Id',
+            order
+        });
+    } else {
+        res.status(404).json({
+            msg: 'order no encontrado, verifique el Id ingresado'
+        })
+    }
+}
+
 const createOrder = async (req = request, res = response) => {
 
     try {
@@ -66,4 +80,4 @@ const deleteOrder = async (req = request, res = response) => {
 
 }
 
-module.exports = { getOrder, createOrder, updateOrder, deleteOrder }
+module.exports = { getOrder, getOrderById, createOrder, updateOrder, deleteOrder }
